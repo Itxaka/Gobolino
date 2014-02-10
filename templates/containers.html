@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if containers %}
-        <div class="row">
+            <div class="row">
             <div id="lateral" class="col-md-2">
                 <ul class="nav nav-pills nav-stacked">
                     <li {% if request.endpoint == "containers" %}class="active"{% endif %}><a href="{{ url_for("containers") }}">Running</a></li>
@@ -10,6 +9,7 @@
                     <li {% if request.endpoint == "newcontainer" %}class="active"{% endif %}><a href="{{ url_for("newcontainer") }}">New container</a></li>
                 </ul>
             </div>
+    {% if containers %}
             <div id="containers" class="col-md-8">
                 <table class="table table-bordered table-hover">
                     <tr>
@@ -44,18 +44,8 @@
                     {% endfor %}
                 </table>
             </div>
-        </div>
     {% endif %}
     {% if containerinfo %}
-        <div class="row">
-            <div id="lateral" class="col-md-2">
-                <ul class="nav nav-pills nav-stacked">
-                    <li {% if request.endpoint == "containers" %}class="active"{% endif %}><a href="{{ url_for("containers") }}">Running</a></li>
-                    <li {% if request.endpoint == "containersall" %}class="active"{% endif %}><a href="{{ url_for("containersall") }}">All</a></li>
-                <hr>
-                    <li {% if request.endpoint == "newcontainer" %}class="active"{% endif %}><a href="{{ url_for("newcontainer") }}">New container</a></li>
-                </ul>
-            </div>
             <div id="containerinfo" class="col-md-8">
                 <table class="table table-bordered table-hover">
                 <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.ID|truncate(12, True, end="") }}</h3></center></th></tr>
@@ -71,6 +61,7 @@
                 <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
                 </table>
         </div>
-        </div>
+
     {% endif %}
+    </div>
 {% endblock %}

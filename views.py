@@ -12,7 +12,7 @@ import datetime
 
 c = docker.Client(base_url='unix://var/run/docker.sock',
                   version='1.8',
-                  timeout=10)
+                  timeout=30)
 
 
 @app.template_filter('date')
@@ -26,6 +26,7 @@ def _jinja2_filter_datetime(date):
 
 @app.route('/')
 def index():
+    # maybe a small dashboard?
     return render_template("index.html")
 
 
@@ -40,7 +41,7 @@ def images():
     images = c.images()
     return render_template("images.html", images=images)
 
-@app.route('/images/all')
+@app.route('/images/all/')
 @auth.login_required
 def imagesall():
     images = c.images(all=True)
@@ -89,6 +90,21 @@ def containersall():
 def containerinfo(container_id=None):
     containerinfo = c.inspect_container(container_id)
     return render_template("containers.html", containerinfo=containerinfo)
+
+@app.route('/containers/<container_id>/stop')
+@auth.login_required
+def containerstop(container_id=None):
+    c.stop(container_id)
+    flash("Container stopped.", "success")
+    return redirect(url_for("containers"))
+
+@app.route('/containers/<container_id>/delete')
+@auth.login_required
+def containerdelete(container_id=None):
+    c.stop(container_id)
+    c.remove_container(container_id)
+    flash("Container deleted.", "success")
+    return redirect(url_for("containers"))
 
 @app.route('/containers/new/')
 @auth.login_required

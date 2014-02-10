@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if images %}
-        <div class="row">
+            <div class="row">
                    <div id="lateral" class="col-md-2">
                 <ul class="nav nav-pills nav-stacked">
                     <li {% if request.endpoint == "images" %}class="active"{% endif %}><a href="{{ url_for("images") }}">Images</a></li>
@@ -10,6 +9,7 @@
                     <li {% if request.endpoint == "pullimage" %}class="active"{% endif %}><a href="{{ url_for("pullimage") }}">Pull image</a></li>
                 </ul>
             </div>
+    {% if images %}
             <div id="images" class="col-md-8">
                 <table class="table table-bordered table-hover">
                     <tr>
@@ -42,24 +42,14 @@
                     {% endfor %}
                 </table>
             </div>
-        </div>
     {% endif %}
     {% if inspect %}
-        <div class="row">
-            <div id="lateral" class="col-md-2">
-                <ul class="nav nav-pills nav-stacked">
-                    <li {% if request.endpoint == "images" %}class="active"{% endif %}><a href="{{ url_for("images") }}">Images</a></li>
-                    <li {% if request.endpoint == "imagesall" %}class="active"{% endif %}><a href="{{ url_for("imagesall") }}">All</a></li>
-                <hr>
-                    <li {% if request.endpoint == "pullimage" %}class="active"{% endif %}><a href="{{ url_for("pullimage") }}">Pull image</a></li>
-                </ul>
-            </div>
             <div id="image" class="col-md-8">
                 <p>{{ inspect.author }}</p>
                 <p>{{ inspect.container_config.PortSpecs }}</p>
                 <p>{{ inspect.container_config.Entrypoint }}</p>
                 <p>{{ inspect.container_config.Cmd }}</p>
             </div>
-        </div>
     {% endif %}
+    </div>
 {% endblock %}
