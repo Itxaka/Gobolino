@@ -27,17 +27,12 @@
                     <th>Actions</th>
                     {% for container in containers %}
                         <tr>
-                            <td><a href="
-
-                                    {{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}">{{ container.Id|truncate(12, True, end="") }}</a>
-                            </td>
+                            <td><a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}">{{ container.Id|truncate(12, True, end="") }}</a></td>
                             <td>{{ container.Status }}</td>
                             <td>{{ container.Image }}</td>
-                            <td>{% for name in container.Ports %}{{ name }}{% if loop.last %}{% else %},
-                            {% endif %}{% endfor %}</td>
+                            <td>{% for name in container.Ports %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{{ container.Command }}</td>
-                            <td>{% for name in container.Names %}{{ name }}{% if loop.last %}{% else %},
-                            {% endif %}{% endfor %}</td>
+                            <td>{% for name in container.Names %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>
                                 <a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop">
                                     <button class="btn btn-warning btn-xs">Stop</button>

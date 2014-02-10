@@ -27,7 +27,7 @@
                             <td><a href="
                                     {{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}">{{ image.Id|truncate(12, True, end="") }}</a>
                             </td>
-                            <td>{{ image.RepoTags[0] }},{{ image.RepoTags[1] }}</td>
+                            <td>{% for name in image.RepoTags %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{{ image.Created|date }}</td>
                             <td>{{ ((image.VirtualSize/1024)/1024)|round(2) }}Mb</td>
                             <td>
@@ -46,14 +46,19 @@
     {% endif %}
     {% if image_id %}
         <div class="row">
-            <div id="image" class="col-md-offset-1 col-md-10">
+            <div id="lateral" class="col-md-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li {% if request.endpoint == "images" %}class="active"{% endif %}><a href="{{ url_for("images") }}">Images</a></li>
+                    <li {% if request.endpoint == "imagesall" %}class="active"{% endif %}><a href="{{ url_for("imagesall") }}">All</a></li>
+                <hr>
+                    <li {% if request.endpoint == "pullimage" %}class="active"{% endif %}><a href="{{ url_for("pullimage") }}">Pull image</a></li>
+                </ul>
+            </div>
+            <div id="image" class="col-md-8">
                 {{ image_id }}
                 <p>{{ inspect.author }}</p>
-
                 <p>{{ inspect.container_config.PortSpecs }}</p>
-
                 <p>{{ inspect.container_config.Entrypoint }}</p>
-
                 <p>{{ inspect.container_config.Cmd }}</p>
             </div>
         </div>
