@@ -44,7 +44,7 @@
             </div>
         </div>
     {% endif %}
-    {% if image_id %}
+    {% if inspect %}
         <div class="row">
             <div id="lateral" class="col-md-2">
                 <ul class="nav nav-pills nav-stacked">
@@ -55,7 +55,6 @@
                 </ul>
             </div>
             <div id="image" class="col-md-8">
-                {{ image_id }}
                 <p>{{ inspect.author }}</p>
                 <p>{{ inspect.container_config.PortSpecs }}</p>
                 <p>{{ inspect.container_config.Entrypoint }}</p>

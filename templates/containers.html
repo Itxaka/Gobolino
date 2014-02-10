@@ -33,12 +33,10 @@
                             <td>{% for name in container.Ports %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{{ container.Command }}</td>
                             <td>{% for name in container.Names %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
-                            <td>
-                                <a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop">
+                            <td><a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop">
                                     <button class="btn btn-warning btn-xs">Stop</button>
                                 </a>
-                                <a href="
-                                        {{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/delete">
+                                <a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/delete">
                                     <button class="btn btn-danger btn-xs">Delete</button>
                                 </a>
                             </td>
@@ -46,6 +44,33 @@
                     {% endfor %}
                 </table>
             </div>
+        </div>
+    {% endif %}
+    {% if containerinfo %}
+        <div class="row">
+            <div id="lateral" class="col-md-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li {% if request.endpoint == "containers" %}class="active"{% endif %}><a href="{{ url_for("containers") }}">Running</a></li>
+                    <li {% if request.endpoint == "containersall" %}class="active"{% endif %}><a href="{{ url_for("containersall") }}">All</a></li>
+                <hr>
+                    <li {% if request.endpoint == "newcontainer" %}class="active"{% endif %}><a href="{{ url_for("newcontainer") }}">New container</a></li>
+                </ul>
+            </div>
+            <div id="containerinfo" class="col-md-8">
+                <table class="table table-bordered table-hover">
+                <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.ID|truncate(12, True, end="") }}</h3></center></th></tr>
+                <tr><td>Hostname</td><td>{{ containerinfo.Config.Hostname }}</td></tr>
+                <tr><td>Dns</td><td>{{ containerinfo.Config.Dns }}</td></tr>
+                <tr><td>Entrypoint</td><td>{{ containerinfo.Config.Entrypoint }}</td></tr>
+                <tr><td>Portspecs</td><td>{{ containerinfo.Config.PortSpecs }}</td></tr>
+                <tr><td>Exposed ports</td><td>{{ containerinfo.ExposedPorts }}</td></tr>
+                <tr><td>Memory</td><td>{{ containerinfo.Config.Memory }}</td></tr>
+                <tr><td>Image</td><td>{{ containerinfo.Config.Image }}</td></tr>
+                <tr><td>Volumes</td><td>{{ containerinfo.Volumes }}</td></tr>
+                <tr><td>IP address</td><td>{{ containerinfo.NetworkSettings.IPAddress }}</td></tr>
+                <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
+                </table>
+        </div>
         </div>
     {% endif %}
 {% endblock %}

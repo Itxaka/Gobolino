@@ -51,7 +51,7 @@ def imagesall():
 @auth.login_required
 def imageninfo(imagen_id=None):
     inspect = c.inspect_image(imagen_id)
-    return render_template("images.html", inspect=inspect, image_id=imagen_id)
+    return render_template("images.html", inspect=inspect)
 
 
 @app.route('/images/<imagen_id>/delete/')
@@ -83,6 +83,12 @@ def containersall():
     containers = c.containers(all=True)
     return render_template("containers.html", containers=containers)
 
+
+@app.route('/containers/<container_id>')
+@auth.login_required
+def containerinfo(container_id=None):
+    containerinfo = c.inspect_container(container_id)
+    return render_template("containers.html", containerinfo=containerinfo)
 
 @app.route('/containers/new/')
 @auth.login_required
