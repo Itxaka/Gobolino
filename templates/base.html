@@ -24,8 +24,8 @@
             <ul class="nav navbar-nav">
                 <li {% if request.endpoint == "index" %}class="active"{% endif %}><a href="{{ url_for("index") }}">Home</a></li>
             {% if session.user and session.logged_in %}
-                <li {% if request.endpoint == "images" %}class="active"{% endif %}><a href="{{ url_for("images") }}">Images</a></li>
-                <li {% if request.endpoint == "containers" %}class="active"{% endif %}><a href="{{ url_for("containers") }}">Containers</a></li>
+                <li {% if request.endpoint == "images" or request.endpoint == "imagesall" or request.endpoint == "pullimage" %}class="active"{% endif %}><a href="{{ url_for("images") }}">Images</a></li>
+                <li {% if request.endpoint == "containers" or request.endpoint == "containersall" or request.endpoint == "containernew" %}class="active"{% endif %}><a href="{{ url_for("containers") }}">Containers</a></li>
                 <li><form class="navbar-form pull-right" action="{{  url_for("logout") }}" method="get"><button class="btn btn-danger">Logout</button></form></li>
             {% else %}
                 <li><form class="navbar-form pull-right" action="{{  url_for("login") }}" method="get"><button class="btn btn-success">Login</button></form></li>

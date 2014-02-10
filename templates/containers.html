@@ -6,7 +6,7 @@
                     <li {% if request.endpoint == "containers" %}class="active"{% endif %}><a href="{{ url_for("containers") }}">Running</a></li>
                     <li {% if request.endpoint == "containersall" %}class="active"{% endif %}><a href="{{ url_for("containersall") }}">All</a></li>
                 <hr>
-                    <li {% if request.endpoint == "newcontainer" %}class="active"{% endif %}><a href="{{ url_for("newcontainer") }}">New container</a></li>
+                    <li {% if request.endpoint == "containernew" %}class="active"{% endif %}><a href="{{ url_for("containernew") }}">New container</a></li>
                 </ul>
             </div>
     {% if containers %}

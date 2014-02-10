@@ -125,6 +125,15 @@ def containerinfo(container_id=None):
     return render_template("containers.html", containerinfo=containerinfo)
 
 
+@app.route('/containers/<container_id>/new')
+@app.route('/containers/new')
+@auth.login_required
+def containernew(container_id=None):
+    if container_id:
+        print container_id
+    return render_template("newcontainers.html")
+
+
 @app.route('/containers/<container_id>/stop')
 @auth.login_required
 def containerstop(container_id=None):
@@ -140,9 +149,3 @@ def containerdelete(container_id=None):
     c.remove_container(container_id)
     flash("Container deleted.", "success")
     return redirect(url_for("containers"))
-
-
-@app.route('/containers/new/')
-@auth.login_required
-def newcontainer():
-    return render_template("newcontainers.html")

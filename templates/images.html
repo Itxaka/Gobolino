@@ -31,7 +31,7 @@
                             <td>{{ image.Created|date }}</td>
                             <td>{{ ((image.VirtualSize/1024)/1024)|round(2) }}Mb</td>
                             <td>
-                                <a href="{{ url_for("containers") }}/new/{{ image_id|truncate(12, True, end="") }}">
+                                <a href="{{ url_for("containers") }}{{ image.Id|truncate(12, True, end="") }}/new">
                                     <button class="btn btn-success btn-xs">New container</button>
                                 </a>
                                 <a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}/delete">
