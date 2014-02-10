@@ -14,7 +14,7 @@
                 <table class="table table-bordered table-hover">
                     <tr>
                         <th colspan="5">
-                            <center>Images <a href="{{ url_for("images") }}"><i class="fa fa-refresh"></i></a></center>
+                            <center>Images <a href="{{ url_for("images") }}"><i class="fa fa-refresh fa-fw"></i></a></center>
                         </th>
                     </tr>
                     <th>Id</th>
@@ -41,6 +41,7 @@
                         </tr>
                     {% endfor %}
                 </table>
+            <a href="{{ url_for("images") }}all/delete"><button class="btn btn-danger">Delete all images</button></a>
             </div>
     {% endif %}
     {% if inspect %}

@@ -43,6 +43,7 @@
                         </tr>
                     {% endfor %}
                 </table>
+                <a href="{{ url_for("containers") }}all/stop"><button class="btn btn-warning">Stop all containers</button></a> <a href="{{ url_for("containers") }}all/delete"><button class="btn btn-danger">Delete all containers</button></a>
             </div>
     {% endif %}
     {% if containerinfo %}
@@ -61,7 +62,6 @@
                 <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
                 </table>
         </div>
-
     {% endif %}
     </div>
 {% endblock %}

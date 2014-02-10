@@ -41,11 +41,24 @@ def images():
     images = c.images()
     return render_template("images.html", images=images)
 
+
 @app.route('/images/all/')
 @auth.login_required
 def imagesall():
     images = c.images(all=True)
     return render_template("images.html", images=images)
+
+
+@app.route('/images/all/delete')
+@auth.login_required
+def imagesalldelete():
+    images = c.images(all=True)
+    for image in images:
+        try:
+            c.remove_image(image.get('Id'))
+        except Exception as error:
+            print error
+    return redirect(url_for("images"))
 
 
 @app.route('/images/<imagen_id>')
@@ -85,11 +98,32 @@ def containersall():
     return render_template("containers.html", containers=containers)
 
 
+@app.route('/containers/all/stop')
+@auth.login_required
+def containersallstop():
+    containers = c.containers(all=True)
+    for container in containers:
+        c.stop(container['Id'])
+    flash("All containers stopped.", "success")
+    return redirect(url_for("containers"))
+
+
+@app.route('/containers/all/delete')
+@auth.login_required
+def containersalldelete():
+    containers = c.containers(all=True)
+    for container in containers:
+        c.remove_container(container['Id'])
+    flash("All containers deleted.", "success")
+    return redirect(url_for("containers"))
+
+
 @app.route('/containers/<container_id>')
 @auth.login_required
 def containerinfo(container_id=None):
     containerinfo = c.inspect_container(container_id)
     return render_template("containers.html", containerinfo=containerinfo)
+
 
 @app.route('/containers/<container_id>/stop')
 @auth.login_required
@@ -98,6 +132,7 @@ def containerstop(container_id=None):
     flash("Container stopped.", "success")
     return redirect(url_for("containers"))
 
+
 @app.route('/containers/<container_id>/delete')
 @auth.login_required
 def containerdelete(container_id=None):
@@ -105,6 +140,7 @@ def containerdelete(container_id=None):
     c.remove_container(container_id)
     flash("Container deleted.", "success")
     return redirect(url_for("containers"))
+
 
 @app.route('/containers/new/')
 @auth.login_required
