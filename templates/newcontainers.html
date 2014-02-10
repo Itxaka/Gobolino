@@ -9,5 +9,17 @@
                 <li {% if request.endpoint == "containernew" %}class="active"{% endif %}><a href="{{ url_for("containernew") }}">New container</a></li>
                 </ul>
             </div>
+        <div id="newcontainer" class="col-md-8">
+    <form method="post" action="{{ url_for("containernew") }}">
+        {% for field in form %}
+            {% if field.id == "csrf_token" %}
+                {{ field }}
+            {% else %}
+                <p>{{ field.label }} {{ field }}</p>
+            {% endif %}
+        {% endfor %}
+    <button type="submit" class="btn btn-success">Create new container</button>
+    </form>
+        </div>
         </div>
 {% endblock %}
