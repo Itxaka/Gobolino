@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if images %}
+        <div class="row">
+            <div id="images" class="col-md-offset-1 col-md-10">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th colspan="5">
+                            <center>Images <a href="{{ url_for("images") }}"><i class="fa fa-refresh"></i></a></center>
+                        </th>
+                    </tr>
+                    <th>Id</th>
+                    <th>Tags</th>
+                    <th>Created</th>
+                    <th>Size</th>
+                    <th>Action</th>
+                    {% for image in images %}
+                        <tr>
+                            <td><a href="
+                                    {{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}">{{ image.Id|truncate(12, True, end="") }}</a>
+                            </td>
+                            <td>{{ image.RepoTags[0] }},{{ image.RepoTags[1] }}</td>
+                            <td>{{ image.Created|date }}</td>
+                            <td>{{ ((image.Size/1024)/1024)|round(2) }}Mb</td>
+                            <td>
+                                <a href="{{ url_for("containers") }}/new/{{ image_id|truncate(12, True, end="") }}">
+                                    <button class="btn btn-success btn-xs">New container</button>
+                                </a>
+                                <a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}/delete">
+                                    <button class="btn btn-danger btn-xs">Delete</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% if image_id %}
+        <div class="row">
+            <div id="image" class="col-md-offset-1 col-md-10">
+                {{ image_id }}
+                <p>{{ inspect.author }}</p>
+
+                <p>{{ inspect.container_config.PortSpecs }}</p>
+
+                <p>{{ inspect.container_config.Entrypoint }}</p>
+
+                <p>{{ inspect.container_config.Cmd }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
