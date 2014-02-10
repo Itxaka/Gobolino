@@ -40,6 +40,12 @@ def images():
     images = c.images()
     return render_template("images.html", images=images)
 
+@app.route('/images/all')
+@auth.login_required
+def imagesall():
+    images = c.images(all=True)
+    return render_template("images.html", images=images)
+
 
 @app.route('/images/<imagen_id>')
 @auth.login_required
@@ -55,9 +61,9 @@ def deleteimage(imagen_id=None):
     return redirect(url_for("images"))
 
 
-@app.route('/pull/', methods=["GET", "POST"])
+@app.route('/images/pull/', methods=["GET", "POST"])
 @auth.login_required
-def pull():
+def pullimage():
     form = PullImage()
     if request.method == "POST":
         return render_template("pull.html", form=form, image=form.data['url'])
@@ -67,5 +73,18 @@ def pull():
 @app.route('/containers/')
 @auth.login_required
 def containers():
-    return render_template("containers.html")
+    containers = c.containers()
+    return render_template("containers.html", containers=containers)
 
+
+@app.route('/containers/all/')
+@auth.login_required
+def containersall():
+    containers = c.containers(all=True)
+    return render_template("containers.html", containers=containers)
+
+
+@app.route('/containers/new/')
+@auth.login_required
+def newcontainer():
+    return render_template("newcontainers.html")

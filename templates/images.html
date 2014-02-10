@@ -2,7 +2,15 @@
 {% block content %}
     {% if images %}
         <div class="row">
-            <div id="images" class="col-md-offset-1 col-md-10">
+                   <div id="lateral" class="col-md-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li {% if request.endpoint == "images" %}class="active"{% endif %}><a href="{{ url_for("images") }}">Images</a></li>
+                    <li {% if request.endpoint == "imagesall" %}class="active"{% endif %}><a href="{{ url_for("imagesall") }}">All</a></li>
+                <hr>
+                    <li {% if request.endpoint == "pullimage" %}class="active"{% endif %}><a href="{{ url_for("pullimage") }}">Pull image</a></li>
+                </ul>
+            </div>
+            <div id="images" class="col-md-8">
                 <table class="table table-bordered table-hover">
                     <tr>
                         <th colspan="5">
@@ -21,7 +29,7 @@
                             </td>
                             <td>{{ image.RepoTags[0] }},{{ image.RepoTags[1] }}</td>
                             <td>{{ image.Created|date }}</td>
-                            <td>{{ ((image.Size/1024)/1024)|round(2) }}Mb</td>
+                            <td>{{ ((image.VirtualSize/1024)/1024)|round(2) }}Mb</td>
                             <td>
                                 <a href="{{ url_for("containers") }}/new/{{ image_id|truncate(12, True, end="") }}">
                                     <button class="btn btn-success btn-xs">New container</button>
@@ -50,5 +58,4 @@
             </div>
         </div>
     {% endif %}
-
 {% endblock %}
