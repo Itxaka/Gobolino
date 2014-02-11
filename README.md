@@ -30,5 +30,6 @@ TODO
 - Use ajax to pull images and show the status
 - Fix the display of the create container
 - Make create container actually create a container
-- Add a button to start a stopped machine
+- ~~Add a button to start a stopped machine~~
+- ~~Add the container logs to the detail view~~
 - Add configs to quickly create a new container from a template
