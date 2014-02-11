@@ -27,7 +27,8 @@ def _jinja2_filter_datetime(date):
 @app.route('/')
 def index():
     # maybe a small dashboard?
-    return render_template("index.html")
+    info = c.info()
+    return render_template("index.html", info=info)
 
 
 @app.route('/login/')
@@ -160,3 +161,15 @@ def containerdelete(container_id=None):
     c.remove_container(container_id)
     flash("Container deleted.", "success")
     return redirect(url_for("containers"))
+
+
+@app.route('/configs/')
+@auth.login_required
+def configs():
+    return render_template("configs.html")
+
+
+@app.route('/configs/new')
+@auth.login_required
+def configsnew():
+    return render_template("configsnew.html")
