@@ -9,3 +9,14 @@ Easy to launch in a python virtual environment, it wants to provide full control
 
 
 Gobolino is under heavy development rigth now so functionality is expect to change quickly.
+
+
+
+Screens
+========
+
+(/images/images.png)
+
+
+(/images/containers.png)
+
