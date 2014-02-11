@@ -33,9 +33,7 @@
                             <td>{% for name in container.Ports %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{{ container.Command }}</td>
                             <td>{% for name in container.Names %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
-                            <td><a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop">
-                                    <button class="btn btn-warning btn-xs">Stop</button>
-                                </a>
+                            <td>{% if "Exit" in container.Status %}<a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/start"><button class="btn btn-success btn-xs">Start</button></a>{% else %}<a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop"><button class="btn btn-warning btn-xs">Stop</button></a>{% endif %}
                                 <a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/delete">
                                     <button class="btn btn-danger btn-xs">Delete</button>
                                 </a>
@@ -51,7 +49,7 @@
                 <table class="table table-bordered table-hover">
                 <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.ID|truncate(12, True, end="") }}</h3></center></th></tr>
                 <tr><td>Hostname</td><td>{{ containerinfo.Config.Hostname }}</td></tr>
-                <tr><td>Dns</td><td>{{ containerinfo.Config.Dns }}</td></tr>
+                <tr><td>Dns</td><td>{% for item in containerinfo.Config.Dns %}{% if loop.last %}{{ item }}{% else %}{{ item }}, {% endif %}{% endfor %}</td></tr>
                 <tr><td>Entrypoint</td><td>{{ containerinfo.Config.Entrypoint }}</td></tr>
                 <tr><td>Portspecs</td><td>{{ containerinfo.Config.PortSpecs }}</td></tr>
                 <tr><td>Exposed ports</td><td>{{ containerinfo.ExposedPorts }}</td></tr>
@@ -60,6 +58,7 @@
                 <tr><td>Volumes</td><td>{{ containerinfo.Volumes }}</td></tr>
                 <tr><td>IP address</td><td>{{ containerinfo.NetworkSettings.IPAddress }}</td></tr>
                 <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
+                {% if logs %}<tr><td colspan="2">{{ logs }}</td></tr>{% endif %}
                 </table>
         </div>
     {% endif %}

@@ -122,7 +122,8 @@ def containersalldelete():
 @auth.login_required
 def containerinfo(container_id=None):
     containerinfo = c.inspect_container(container_id)
-    return render_template("containers.html", containerinfo=containerinfo)
+    logs = c.logs(container_id)
+    return render_template("containers.html", containerinfo=containerinfo, logs=logs)
 
 
 @app.route('/containers/new', methods=["GET", "POST"])
@@ -140,7 +141,15 @@ def containernew():
 @auth.login_required
 def containerstop(container_id=None):
     c.stop(container_id)
-    flash("Container stopped.", "success")
+    flash("Container %s stopped." % container_id, "success")
+    return redirect(url_for("containers"))
+
+
+@app.route('/containers/<container_id>/start')
+@auth.login_required
+def containerstart(container_id=None):
+    c.start(container_id)
+    flash("Container %s started." % container_id, "success")
     return redirect(url_for("containers"))
 
 
