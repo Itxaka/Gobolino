@@ -8,6 +8,7 @@ from models import User
 from forms import PullImage, NewContainer
 from oauth import *
 import datetime
+import threading
 
 
 c = docker.Client(base_url='unix://var/run/docker.sock',
@@ -89,6 +90,11 @@ def deleteimage(imagen_id=None):
 def pullimage():
     form = PullImage()
     if request.method == "POST":
+        def pullimagebackground(image):
+            c.pull(image)
+        t = threading.Thread(target=pullimagebackground, args=[form.data['url']])
+        t.start()
+        flash("The image is downloading in the background.", "success")
         return render_template("pull.html", form=form, image=form.data['url'])
     return render_template("pull.html", form=form)
 
