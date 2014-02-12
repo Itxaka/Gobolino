@@ -47,7 +47,8 @@
     {% if containerinfo %}
             <div id="containerinfo" class="col-md-8">
                 <table class="table table-bordered table-hover">
-                <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.ID|truncate(12, True, end="") }}</h3></center></th></tr>
+                <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.Name }}</h3></center></th></tr>
+                <tr><td>Id</td><td>{{ containerinfo.ID|truncate(12, True, end="") }}</td></tr>
                 <tr><td>Hostname</td><td>{{ containerinfo.Config.Hostname }}</td></tr>
                 <tr><td>Dns</td><td>{% for item in containerinfo.Config.Dns %}{% if loop.last %}{{ item }}{% else %}{{ item }}, {% endif %}{% endfor %}</td></tr>
                 <tr><td>Entrypoint</td><td>{{ containerinfo.Config.Entrypoint }}</td></tr>
@@ -58,7 +59,7 @@
                 <tr><td>Volumes</td><td>{{ containerinfo.Volumes }}</td></tr>
                 <tr><td>IP address</td><td>{{ containerinfo.NetworkSettings.IPAddress }}</td></tr>
                 <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
-                {% if logs %}<tr><td colspan="2">{{ logs }}</td></tr>{% endif %}
+                {% if logs %}<tr><td colspan="2"><ul>{% for log in logs %}<li>{{ log }}</li>{% endfor %}</ul></td></tr>{% endif %}
                 </table>
         </div>
     {% endif %}
