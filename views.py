@@ -69,6 +69,14 @@ def imageninfo(imagen_id=None):
     return render_template("images.html", inspect=inspect)
 
 
+@app.route('/images/<imagen_id>/run/')
+@auth.login_required
+def runimage(imagen_id=None):
+    data = c.inspect_image(imagen_id)
+    c.start(c.create_container(image=imagen_id, command=data['config']['Cmd'], stdin_open=True, detach=True))
+    return redirect(url_for("containers"))
+
+
 @app.route('/images/<imagen_id>/delete/')
 @auth.login_required
 def deleteimage(imagen_id=None):
@@ -123,6 +131,7 @@ def containersalldelete():
 @auth.login_required
 def containerinfo(container_id=None):
     containerinfo = c.inspect_container(container_id)
+    print containerinfo
     logs = c.logs(container_id).rstrip("\n").split("\n")
     logs.reverse()
     if logs[0] == "":
@@ -140,7 +149,7 @@ def containernew():
     elif request.method == "POST":
         if form.validate_on_submit():
             container = c.create_container(image=form.data['image'], name=form.data.get('name'),
-                                           hostname=form.data.get('hostname'),
+                                           hostname=form.data.get('hostname'), stdin_open=True,
                                            dns=form.data.get('dns'), mem_limit=form.data.get('mem_limit'),
                                            command=form.data.get('command'), privileged=form.data.get('privileged'))
             if form.start.data:
