@@ -131,11 +131,23 @@ def containerinfo(container_id=None):
 @auth.login_required
 def containernew():
     form = NewContainer()
+    form.image.choices = [(x['Id'], x['RepoTags'][0]) for x in c.images()]
     if request.method == "GET":
-        form.image.choices = [(x['Id'], x['RepoTags'][0]) for x in c.images()]
         return render_template("newcontainers.html", form=form)
     elif request.method == "POST":
-        return redirect(url_for("containers"))
+        if form.validate_on_submit():
+            container = c.create_container(image=form.data['image'], name=form.data.get('name'),
+                                           hostname=form.data.get('hostname'),
+                                           dns=form.data.get('dns'), mem_limit=form.data.get('mem_limit'),
+                                           command=form.data.get('command'), privileged=form.data.get('privileged'))
+            if form.start.data:
+                c.start(container['Id'])
+                flash("Container created and started.", "success")
+                return redirect(url_for("containers"))
+            else:
+                flash("Container %s created." % container['Id'])
+                return redirect(url_for("containersall"))
+        return render_template("newcontainers.html", form=form)
 
 
 @app.route('/containers/<container_id>/stop')

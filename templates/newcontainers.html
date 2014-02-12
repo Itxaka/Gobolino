@@ -15,7 +15,7 @@
             {% if field.id == "csrf_token" %}
                 {{ field }}
             {% else %}
-                <p>{{ field.label }} {{ field }}</p>
+                <p>{{ field.label }} {{ field }} <b>{{ field.errors[0] if field.errors}}</b></p>
             {% endif %}
         {% endfor %}
     <button type="submit" class="btn btn-success">Create new container</button>
