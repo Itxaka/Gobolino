@@ -125,6 +125,8 @@ def containerinfo(container_id=None):
     containerinfo = c.inspect_container(container_id)
     logs = c.logs(container_id).rstrip("\n").split("\n")
     logs.reverse()
+    if logs[0] == "":
+        logs = None
     return render_template("containers.html", containerinfo=containerinfo, logs=logs)
 
 

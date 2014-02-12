@@ -59,7 +59,7 @@
                 <tr><td>Volumes</td><td>{{ containerinfo.Volumes }}</td></tr>
                 <tr><td>IP address</td><td>{{ containerinfo.NetworkSettings.IPAddress }}</td></tr>
                 <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
-                {% if logs %}<tr><td colspan="2"><ul>{% for log in logs %}<li>{{ log }}</li>{% endfor %}</ul></td></tr>{% endif %}
+                {% if logs  %}<tr><td colspan="2"><ul>{% for log in logs %}<li>{{ log }}</li>{% endfor %}</ul></td></tr>{% endif %}
                 </table>
         </div>
     {% endif %}
