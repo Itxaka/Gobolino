@@ -3,4 +3,4 @@ import sys
 sys.path.insert(0, '..')
 
 import main
-main.app.run()
+main.app.run("localhost")
