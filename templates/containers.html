@@ -13,11 +13,12 @@
             <div id="containers" class="col-md-8">
                 <table class="table table-bordered table-hover">
                     <tr>
-                        <th colspan="7">
+                        <th colspan="8">
                             <center>Containers <a href="{{ url_for("containers") }}"><i class="fa fa-refresh"></i></a>
                             </center>
                         </th>
                     </tr>
+                    <th></th>
                     <th>Id</th>
                     <th>Status</th>
                     <th>Image</th>
@@ -27,11 +28,12 @@
                     <th>Actions</th>
                     {% for container in containers %}
                         <tr>
+                            <td><center><input type="checkbox" id="select" value="{{ container.Id|truncate(12, True, end="") }}"></center></td>
                             <td><a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}">{{ container.Id|truncate(12, True, end="") }}</a></td>
                             <td>{{ container.Status }}</td>
                             <td>{{ container.Image }}</td>
                             <td>{% for name in container.Ports %}{% if name.IP %}{{ name.IP }}:{% endif %}{% if name.PublicPort %}{{ name.PublicPort }}{% endif %}{% if name.PrivatePort %} -> {{ name.PrivatePort }}{% endif %}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
-                            <td>{{ container.Command }}</td>
+                            <td><div data-toggle="tooltip" title="command">{{ container.Command }}</div></td>
                             <td>{% for name in container.Names %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{% if "Exit" in container.Status %}<a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/start"><button class="btn btn-success btn-xs">Start</button></a>{% else %}<a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop"><button class="btn btn-warning btn-xs">Stop</button></a>{% endif %}
                                 <a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/delete">
@@ -41,7 +43,9 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <a href="{{ url_for("containers") }}all/stop"><button class="btn btn-warning">Stop all containers</button></a> <a href="{{ url_for("containers") }}all/delete"><button class="btn btn-danger">Delete all containers</button></a>
+                <p><a href="{{ url_for("containers") }}all/stop"><button class="btn btn-warning">Stop all containers</button></a> <a href="{{ url_for("containers") }}all/delete"><button class="btn btn-danger">Delete all containers</button></a></p>
+                <hr>
+                <p><button class="btn btn-warning" onclick="stopcontainers()">Stop selected containers</button> <button class="btn btn-danger" onclick="deletecontainers()">Delete selected containers</button></p>
             </div>
     {% endif %}
     {% if containerinfo %}
@@ -64,4 +68,33 @@
         </div>
     {% endif %}
     </div>
+{% endblock %}
+{% block end %}
+        <script>
+$('#command').tooltip()
+    </script>
+    <script>
+    function stopcontainers() {
+        $("input:checkbox").each(function() {
+            if ($(this).is(":checked")) {
+                $.ajax( {
+                    type: "GET",
+                    url: "{{ url_for("containers") }}" + $(this).val() + "/stop"
+                })
+            }
+        });
+        setTimeout(function() {location.reload()}, 5000)
+    }
+    function deletecontainers() {
+        $("input:checkbox").each(function() {
+            if ($(this).is(":checked")) {
+                $.ajax( {
+                    type: "GET",
+                    url: "{{ url_for("containers") }}" + $(this).val() + "/delete"
+                })
+            }
+        });
+        setTimeout(function() {location.reload()}, 5000)
+    }
+    </script>
 {% endblock %}
