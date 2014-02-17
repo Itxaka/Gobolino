@@ -10,6 +10,8 @@ class Configuration(object):
     FACEBOOK_APP_SECRET = ""
     TWITTER_KEY = ""
     TWITTER_SECRET = ""
+    HOST = "127.0.0.1"
+    DOCKER_HOST = "unix://var/run/docker.sock"
 
 class ConfigurationSqlite(Configuration):
     DATABASE = {

@@ -11,7 +11,7 @@ import datetime
 import threading
 
 
-c = docker.Client(base_url='unix://var/run/docker.sock',
+c = docker.Client(base_url=app.config.get("DOCKER_HOST"),
                   version='1.8',
                   timeout=30)
 

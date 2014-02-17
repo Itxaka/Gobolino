@@ -29,6 +29,7 @@ TODO
 
 - Use ajax to pull images and show the status
 - Fix the display of the create container
+- Remove oath authentication and create a login page
 - ~~Make create container actually create a container~~
 - ~~Add a button to start a stopped machine~~
 - ~~Add the container logs to the detail view~~
