@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from flask_wtf import Form
-from wtforms import TextField, PasswordField, BooleanField, IntegerField, SelectField
-from wtforms.validators import Email, InputRequired, EqualTo, required
+from wtforms import TextField, PasswordField, BooleanField, IntegerField, SelectField, SubmitField
+from wtforms.validators import InputRequired
 
 
-class RegisterForm(Form):
+class LoginForm(Form):
     username = TextField(validators=[InputRequired()])
-    password = PasswordField(validators=[InputRequired(), EqualTo("confirm", message="Passwords don't match")])
-    confirm = PasswordField()
-    email = TextField(validators=[Email])
+    password = PasswordField(validators=[InputRequired()])
+    submit = SubmitField()
 
 
 class PullImage(Form):

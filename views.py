@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import docker
-from flask import request, redirect, url_for, render_template, flash, session, jsonify, g
-from flask_peewee.utils import get_object_or_404, object_list
+from flask import request, redirect, url_for, render_template, flash
 from app import app
 from auth import auth
 from models import User
-from forms import PullImage, NewContainer
-from oauth import *
+from forms import PullImage, NewContainer, LoginForm
 import datetime
 import threading
 
@@ -34,7 +32,8 @@ def index():
 
 @app.route('/login/')
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    return render_template("login.html", form=form)
 
 
 @app.route('/images/')
