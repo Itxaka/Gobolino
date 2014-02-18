@@ -5,6 +5,7 @@ This is a simple installation that uses Flask webserver to run Gobolino.
 
 Never use this on production, this is for testing or trying only!!
 
+Easy way:
 
 1 - Clone the repository::
 
@@ -16,11 +17,15 @@ Never use this on production, this is for testing or trying only!!
 
 3 - Edit config.py to add your data
 
-4 - Execute runserver.py::
+4 - Create a user::
+
+    python createuser.py user password
+
+5 - Execute runserver.py::
 
     python runserver.py
 
-5 - Connect to your server and start managing your docker images and containers!
+6 - Connect to your server and start managing your docker images and containers!
 
 Installation on a production server
 =====================================
