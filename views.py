@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import docker
-from flask import request, redirect, url_for, render_template, flash
+from flask import request, redirect, url_for, render_template, flash, session
 from app import app
 from auth import auth
-from models import User
 from forms import PullImage, NewContainer, LoginForm
+from models import User
 import datetime
 import threading
 
@@ -30,10 +30,30 @@ def index():
     return render_template("index.html", info=info)
 
 
-@app.route('/login/')
+@app.route('/login/', methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    return render_template("login.html", form=form)
+    if request.method == "GET":
+        return render_template("login.html", form=form)
+    elif request.method == "POST":
+        if form.validate_on_submit():
+            user = User.select().where(User.username == form.data.get('username')).first()
+            if user.check_password(form.data.get('password')):
+                auth.login_user(user)
+                session['user'] = user.username
+                return redirect(url_for("index"))
+            else:
+                flash("User of password incorrect.", "error")
+                return redirect(url_for("index"))
+        else:
+            flash("An error occurred, please fix it and try again.", "error")
+            return render_template("login.html", form=form)
+
+
+@app.route('/logout/')
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
 
 
 @app.route('/images/')

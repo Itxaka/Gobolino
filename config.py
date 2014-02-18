@@ -4,14 +4,9 @@
 class Configuration(object):
     DEBUG = True
     SECRET_KEY = ""
-    GOOGLE_ID = ""
-    GOOGLE_SECRET = ""
-    FACEBOOK_APP_ID = ""
-    FACEBOOK_APP_SECRET = ""
-    TWITTER_KEY = ""
-    TWITTER_SECRET = ""
     HOST = "127.0.0.1"
     DOCKER_HOST = "unix://var/run/docker.sock"
+
 
 class ConfigurationSqlite(Configuration):
     DATABASE = {
