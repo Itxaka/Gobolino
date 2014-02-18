@@ -15,7 +15,7 @@ Easy way:
 
     pip install -r requirements.txt
 
-3 - Edit config.py to add your data
+3 - Edit config.py to add your data, usually you will only need to add a secret key to the config
 
 4 - Create a user::
 
