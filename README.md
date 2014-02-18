@@ -23,6 +23,10 @@ Containers tab
 ![Containers](https://raw.github.com/Itxaka/Gobolino/master/images/containers.png)
 
 
+Install
+========
+
+Check INSTALL.md
 
 TODO
 =====
