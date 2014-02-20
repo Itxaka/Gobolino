@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
+
+from web import main
+
 sys.path.insert(0, '..')
 
-import main
 main.app.run(main.app.config.get("HOST"))

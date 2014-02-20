@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+import datetime
+import threading
+
 import docker
 from flask import request, redirect, url_for, render_template, flash, session
+
 from app import app
 from auth import auth
 from forms import PullImage, NewContainer, LoginForm
-from models import User
-import datetime
-import threading
+from web.models import User
 
 
 c = docker.Client(base_url=app.config.get("DOCKER_HOST"),

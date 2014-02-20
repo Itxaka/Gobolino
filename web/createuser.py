@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from models import User
+import sys
+
 from flask_peewee.auth import make_password
 from peewee import IntegrityError
-import sys
+
+from web.models import User
+
 
 try:
     user = sys.argv[1]
