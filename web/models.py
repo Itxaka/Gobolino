@@ -2,7 +2,7 @@
 from flask_peewee.auth import BaseUser
 from peewee import *
 
-from web.app import db
+from app import db
 
 
 class User(db.Model, BaseUser):

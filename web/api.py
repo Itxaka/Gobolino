@@ -3,7 +3,7 @@ from flask_peewee.rest import RestAPI, RestResource, UserAuthentication, AdminAu
 
 from app import app
 from auth import auth
-from web.models import User
+from models import User
 
 
 user_auth = UserAuthentication(auth)

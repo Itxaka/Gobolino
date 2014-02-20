@@ -5,7 +5,7 @@ import sys
 from flask_peewee.auth import make_password
 from peewee import IntegrityError
 
-from web.models import User
+from models import User
 
 
 try:

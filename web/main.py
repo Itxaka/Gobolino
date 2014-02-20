@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from web.views import *
+from views import *
 
 
 if __name__ == '__main__':

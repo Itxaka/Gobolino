@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from web import main
+import main
 
 sys.path.insert(0, '..')
 

@@ -2,7 +2,7 @@ from flask_peewee.admin import Admin, ModelAdmin
 
 from app import app
 from auth import auth
-from web.models import User
+from models import User
 
 
 class UserView(ModelAdmin):

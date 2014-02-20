@@ -8,7 +8,7 @@ from flask import request, redirect, url_for, render_template, flash, session
 from app import app
 from auth import auth
 from forms import PullImage, NewContainer, LoginForm
-from web.models import User
+from models import User
 
 
 c = docker.Client(base_url=app.config.get("DOCKER_HOST"),
