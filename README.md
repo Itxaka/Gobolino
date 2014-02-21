@@ -16,17 +16,21 @@ Screens
 ========
 
 Images tab
-![Images](https://raw.github.com/Itxaka/Gobolino/master/images/images.png)
+![Images](https://raw.github.com/Itxaka/Gobolino/master/web/images/images.png)
 
 
 Containers tab
-![Containers](https://raw.github.com/Itxaka/Gobolino/master/images/containers.png)
+![Containers](https://raw.github.com/Itxaka/Gobolino/master/web/images/containers.png)
 
 
 Install
 ========
 
 Check INSTALL.md
+
+Or if you want to try it rigth now use the trusted docker image::
+
+    docker run -d itxaka/Gobolino
 
 TODO
 =====
