@@ -13,10 +13,11 @@
             <div id="images" class="col-md-8">
                 <table class="table table-bordered table-hover">
                     <tr>
-                        <th colspan="5">
+                        <th colspan="6">
                             <center>Images <a href="{{ url_for("images") }}"><i class="fa fa-refresh fa-fw"></i></a></center>
                         </th>
                     </tr>
+                    <th><center><input type="checkbox" id="selectall" onclick="makeselect()"></center></th>
                     <th>Id</th>
                     <th>Tags</th>
                     <th>Created</th>
@@ -24,9 +25,8 @@
                     <th>Action</th>
                     {% for image in images %}
                         <tr>
-                            <td><a href="
-                                    {{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}">{{ image.Id|truncate(12, True, end="") }}</a>
-                            </td>
+                            <td><center><input type="checkbox" id="select" value="{{ image.Id|truncate(12, True, end="") }}"></center></td>
+                            <td><a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}">{{ image.Id|truncate(12, True, end="") }}</a></td>
                             <td>{% for name in image.RepoTags %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{{ image.Created|date }}</td>
                             <td>{{ ((image.VirtualSize/1024)/1024)|round(2) }}Mb</td>
@@ -41,7 +41,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-            <a href="{{ url_for("images") }}all/delete"><button class="btn btn-danger">Delete all images</button></a>
+            <a href="{{ url_for("images") }}all/delete"><button class="btn btn-danger">Delete all images</button></a> <button class="btn btn-danger" onclick="deleteimages()">Delete selected images</button>
             </div>
     {% endif %}
     {% if inspect %}
@@ -53,4 +53,32 @@
             </div>
     {% endif %}
     </div>
+{% endblock %}
+{% block end %}
+    <script>
+
+        function deleteimages() {
+        $("input[id=select]").each(function() {
+            if ($(this).is(":checked")) {
+                $.ajax( {
+                    type: "GET",
+                    url: "{{ url_for("images") }}" + $(this).val() + "/delete"
+                })
+            }
+        });
+        setTimeout(function() {location.reload()}, 5000)
+        }
+        function makeselect() {
+        if ($("input[id=selectall]").is(":checked")) {
+            $('input[id=select]').each(function () {
+                this.checked = true;
+            })
+        }
+        else {
+                $("input[id=select]").each(function() {
+                    this.checked = false;
+                })
+            }
+        }
+    </script>
 {% endblock %}
