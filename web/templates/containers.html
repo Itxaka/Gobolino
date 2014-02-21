@@ -32,7 +32,7 @@
                             <td><a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}">{{ container.Id|truncate(12, True, end="") }}</a></td>
                             <td>{{ container.Status }}</td>
                             <td>{{ container.Image }}</td>
-                            <td>{% for name in container.Ports %}{% if name.IP %}{{ name.IP }}:{% endif %}{% if name.PublicPort %}{{ name.PublicPort }}{% endif %}{% if name.PrivatePort %} -> {{ name.PrivatePort }}{% endif %}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
+                            <td>{% if container.Ports is not none %}{% for name in container.Ports %}{% if name.IP %}{{ name.IP }}:{% endif %}{% if name.PublicPort %}{{ name.PublicPort }}{% endif %}{% if name.PrivatePort %} -> {{ name.PrivatePort }}{% endif %}{% if loop.last %}{% else %}, {% endif %}{% endfor %}{% endif %}</td>
                             <td><div data-toggle="tooltip" title="command">{{ container.Command }}</div></td>
                             <td>{% for name in container.Names %}{{ name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</td>
                             <td>{% if "Exit" in container.Status %}<a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/start"><button class="btn btn-success btn-xs">Start</button></a>{% else %}<a href="{{ url_for("containers") }}{{ container.Id|truncate(12, True, end="") }}/stop"><button class="btn btn-warning btn-xs">Stop</button></a>{% endif %}
