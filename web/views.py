@@ -40,12 +40,15 @@ def login():
     elif request.method == "POST":
         if form.validate_on_submit():
             user = User.select().where(User.username == form.data.get('username')).first()
+            if user is None:
+                flash("User or password incorrect.", "error")
+                return redirect(url_for("index"))
             if user.check_password(form.data.get('password')):
                 auth.login_user(user)
                 session['user'] = user.username
                 return redirect(url_for("index"))
             else:
-                flash("User of password incorrect.", "error")
+                flash("User or password incorrect.", "error")
                 return redirect(url_for("index"))
         else:
             flash("An error occurred, please fix it and try again.", "error")
