@@ -72,7 +72,7 @@
 {% block end %}
     <script>
     function stopcontainers() {
-        $("#select").each(function() {
+        $("input[id=select]").each(function() {
             if ($(this).is(":checked")) {
                 $.ajax( {
                     type: "GET",
@@ -83,9 +83,8 @@
         setTimeout(function() {location.reload()}, 5000)
     }
     function deletecontainers() {
-        $("#select").each(function() {
+        $("input[id=select]").each(function() {
             if ($(this).is(":checked")) {
-                alert(this);
                 $.ajax( {
                     type: "GET",
                     url: "{{ url_for("containers") }}" + $(this).val() + "/delete"
