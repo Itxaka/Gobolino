@@ -18,7 +18,7 @@
                             </center>
                         </th>
                     </tr>
-                    <th></th>
+                    <th><center><input type="checkbox" id="selectall" onclick="makeselect()"></center></th>
                     <th>Id</th>
                     <th>Status</th>
                     <th>Image</th>
@@ -70,12 +70,9 @@
     </div>
 {% endblock %}
 {% block end %}
-        <script>
-$('#command').tooltip()
-    </script>
     <script>
     function stopcontainers() {
-        $("input:checkbox").each(function() {
+        $("#select").each(function() {
             if ($(this).is(":checked")) {
                 $.ajax( {
                     type: "GET",
@@ -86,8 +83,9 @@ $('#command').tooltip()
         setTimeout(function() {location.reload()}, 5000)
     }
     function deletecontainers() {
-        $("input:checkbox").each(function() {
+        $("#select").each(function() {
             if ($(this).is(":checked")) {
+                alert(this);
                 $.ajax( {
                     type: "GET",
                     url: "{{ url_for("containers") }}" + $(this).val() + "/delete"
@@ -96,5 +94,17 @@ $('#command').tooltip()
         });
         setTimeout(function() {location.reload()}, 5000)
     }
+    function makeselect() {
+        if ($("input[id=selectall]").is(":checked")) {
+            $('input[id=select]').each(function () {
+                this.checked = true;
+            })
+        }
+        else {
+                $("input[id=select]").each(function() {
+                    this.checked = false;
+                })
+            }
+        }
     </script>
 {% endblock %}
