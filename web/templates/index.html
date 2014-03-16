@@ -1,4 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-{{ info }}
+    <div class="row">
+            <div id="info" class="col-md-offset-2 col-md-8">
+    {% for key, value in info.iteritems() %}
+    <p>{{ key }}: {{ value }}</p>
+    {% endfor %}
+    </div>
+    </div>
 {% endblock %}
