@@ -98,8 +98,14 @@ def imageninfo(imagen_id=None):
 @auth.login_required
 def runimage(imagen_id=None):
     data = c.inspect_image(imagen_id)
-    c.start(c.create_container(image=imagen_id, command=data['config']['Cmd'], stdin_open=True, detach=True))
-    return redirect(url_for("containers"))
+    try:
+        c.start(c.create_container(image=imagen_id, command=data['config']['Cmd'], stdin_open=True, detach=True))
+        return redirect(url_for("containers"))
+    except docker.APIError as error:
+        if error.explanation == "No command specified":
+            flash("The image has no default command to run, so I can't launch it.", "error")
+            return redirect(url_for("images"))
+
 
 
 @app.route('/images/<imagen_id>/delete/')

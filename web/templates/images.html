@@ -31,12 +31,8 @@
                             <td>{{ image.Created|date }}</td>
                             <td>{{ ((image.VirtualSize/1024)/1024)|round(2) }}Mb</td>
                             <td>
-                                <a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}/run">
-                                    <button class="btn btn-success btn-xs">Run</button>
-                                </a>
-                                <a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}/delete">
-                                    <button class="btn btn-danger btn-xs">Delete</button>
-                                </a>
+                                <a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}/run"><button class="btn btn-success btn-xs">Run</button></a>
+                                <a href="{{ url_for("images") }}{{ image.Id|truncate(12, True, end="") }}/delete"><button class="btn btn-danger btn-xs">Delete</button></a>
                             </td>
                         </tr>
                     {% endfor %}
