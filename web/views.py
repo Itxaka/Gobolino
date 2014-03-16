@@ -27,6 +27,8 @@ def _jinja2_filter_datetime(date):
 
 @app.route('/')
 def index():
+    if auth.get_logged_in_user() is None:
+        return redirect(url_for("login"))
     # maybe a small dashboard?
     info = c.info()
     return render_template("index.html", info=info)
