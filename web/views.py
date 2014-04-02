@@ -169,7 +169,6 @@ def containersalldelete():
 @auth.login_required
 def containerinfo(container_id=None):
     containerinfo = c.inspect_container(container_id)
-    print containerinfo
     logs = c.logs(container_id).rstrip("\n").split("\n")
     logs.reverse()
     if logs[0] == "":
