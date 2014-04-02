@@ -54,12 +54,12 @@
                 <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.Name }}</h3></center></th></tr>
                 <tr><td>Id</td><td>{{ containerinfo.ID|truncate(12, True, end="") }}</td></tr>
                 <tr><td>Hostname</td><td>{{ containerinfo.Config.Hostname }}</td></tr>
-                <tr><td>Dns</td><td>{% for item in containerinfo.Config.Dns %}{% if loop.last %}{{ item }}{% else %}{{ item }}, {% endif %}{% endfor %}</td></tr>
-                <tr><td>Entrypoint</td><td>{{ containerinfo.Config.Entrypoint }}</td></tr>
-                <tr><td>Portspecs</td><td>{{ containerinfo.Config.PortSpecs }}</td></tr>
-                <tr><td>Exposed ports</td><td>{{ containerinfo.ExposedPorts }}</td></tr>
-                <tr><td>Memory</td><td>{{ containerinfo.Config.Memory }}</td></tr>
-                <tr><td>Image</td><td>{{ containerinfo.Config.Image }}</td></tr>
+                <tr><td>Dns</td><td>{% if containerinfo.Config.Dns is not none %}{% for item in containerinfo.Config.Dns %}{% if loop.last %}{{ item }}{% else %}{{ item }}, {% endif %}{% endfor %}{% else %}No Dns{% endif %}</td></tr>
+                <tr><td>Entrypoint</td><td>{% if containerinfo.Config.Entrypoint is none %}No Entrypoint{% else %}{{ containerinfo.Config.Entrypoint }}{% endif %}</td></tr>
+                <tr><td>Portspecs</td><td>{% if containerinfo.Config.PortSpecs is none %}No PortSpecs{% else %}{{ containerinfo.Config.PortSpecs }}{% endif %}</td></tr>
+                <tr><td>Exposed ports</td><td>{% if containerinfo.Config.ExposedPorts is none %}No ExposedPorts{% else %}{{ containerinfo.ExposedPorts }}{% endif %}</td></tr>
+                <tr><td>Memory</td><td>{% if containerinfo.Config.Memory == 0 %}No memory limits{% else %}{{ containerinfo.Config.Memory }}{% endif %}</td></tr>
+                <tr><td>Image</td><td><a href="{{ url_for("images") }}{{ containerinfo.Image|truncate(12, True, end="") }}">{{ containerinfo.Config.Image }}</a></td></tr>
                 <tr><td>Volumes</td><td>{{ containerinfo.Volumes }}</td></tr>
                 <tr><td>IP address</td><td>{{ containerinfo.NetworkSettings.IPAddress }}</td></tr>
                 <tr><td>Running?</td><td>{{ containerinfo.State.Running }}</td></tr>
