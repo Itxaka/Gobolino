@@ -51,7 +51,7 @@
     {% if containerinfo %}
             <div id="containerinfo" class="col-md-8">
                 <table class="table table-bordered table-hover">
-                <tr class="success"><th colspan="2"><center><h3>Image {{ containerinfo.Name }}</h3></center></th></tr>
+                <tr class="success"><th colspan="2"><center><h3>Container {{ containerinfo.Name }}</h3></center></th></tr>
                 <tr><td>Id</td><td>{{ containerinfo.ID|truncate(12, True, end="") }}</td></tr>
                 <tr><td>Hostname</td><td>{{ containerinfo.Config.Hostname }}</td></tr>
                 <tr><td>Dns</td><td>{% if containerinfo.Config.Dns is not none %}{% for item in containerinfo.Config.Dns %}{% if loop.last %}{{ item }}{% else %}{{ item }}, {% endif %}{% endfor %}{% else %}No Dns{% endif %}</td></tr>
