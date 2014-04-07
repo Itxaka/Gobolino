@@ -113,7 +113,10 @@ def runimage(imagen_id=None):
 @app.route('/images/<imagen_id>/delete/')
 @auth.login_required
 def deleteimage(imagen_id=None):
-    c.remove_image(imagen_id)
+    try:
+        c.remove_image(imagen_id)
+    except docker.APIError as error:
+        flash(error.explanation, "error")
     return redirect(url_for("images"))
 
 
